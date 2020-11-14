@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DairyForm", "DairyForm\DairyForm.csproj", "{EC658EE5-CCE5-4352-A2B8-686C2946A2D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC658EE5-CCE5-4352-A2B8-686C2946A2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC658EE5-CCE5-4352-A2B8-686C2946A2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC658EE5-CCE5-4352-A2B8-686C2946A2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC658EE5-CCE5-4352-A2B8-686C2946A2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9CB16B8-B873-4FD0-9F74-4D6A4F25FBAC}
+	EndGlobalSection
+EndGlobal

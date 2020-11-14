@@ -1,0 +1,13 @@
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.csprojAssemblyReference.cache
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.AssemblyInfoInputs.cache
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.AssemblyInfo.cs
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.csproj.CoreCompileInputs.cache
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.exe
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.deps.json
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.runtimeconfig.json
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.runtimeconfig.dev.json
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.dll
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\bin\Debug\netcoreapp3.1\20201114study.pdb
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.dll
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.pdb
+C:\hjun\git\C-Sharp-Study\20201114study\20201114study\obj\Debug\netcoreapp3.1\20201114study.genruntimeconfig.cache
