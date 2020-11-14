@@ -28,13 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.btnSubmit = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(12, 12);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(290, 21);
+            this.dateTimePicker1.TabIndex = 0;
+            // 
+            // btnSubmit
+            // 
+            this.btnSubmit.Location = new System.Drawing.Point(12, 254);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(75, 23);
+            this.btnSubmit.TabIndex = 1;
+            this.btnSubmit.Text = "submit";
+            this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(12, 39);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(423, 199);
+            this.richTextBox1.TabIndex = 2;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 450);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.btnSubmit);
+            this.Controls.Add(this.dateTimePicker1);
             this.Name = "Form1";
             this.Text = "Diary";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -43,6 +75,10 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 
