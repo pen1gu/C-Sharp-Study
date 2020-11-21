@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,13 +35,20 @@ namespace DairyForm
         {
             var date = dateTimePicker1.Value;
             var text = richTextBox1.Text;
+            var diary = new DiaryData();
+
+            diary.Content = text;
+            var jsonText = JsonConvert.SerializeObject(diary);
 
             var path = @"C:\hjun\git\C-Sharp-Study\DairyForm\text";
-            var fileName = date.ToString("yyyyMMdd") + ".txt";
-            var fileName0 = $"{date:yyyyMMdd}.txt"; //현업에서 쓰이는 문법
+            //var fileName0 = date.ToString("yyyyMMdd") + ".txt";
+            var fileName = $"{date:yyyyMMdd}.json"; //현업에서 쓰이는 문법
             var diaryPath = Path.Combine(path,fileName);
 
-            File.WriteAllText(diaryPath, text);
+            File.WriteAllText(diaryPath, jsonText);
+
         }
+
+        //일기 제목
     }
 }
