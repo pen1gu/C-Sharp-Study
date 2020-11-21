@@ -34,11 +34,13 @@ namespace DairyForm
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             var date = dateTimePicker1.Value;
-            var text = richTextBox1.Text;
             var diary = new DiaryData();
 
-            diary.Content = text;
-            var jsonText = JsonConvert.SerializeObject(diary);
+            diary.Title = textBox1.Text;
+            diary.Content = richTextBox1.Text; ;
+            diary.Date = date;
+            
+            var jsonText = JsonConvert.SerializeObject(diary,Formatting.Indented);
 
             var path = @"C:\hjun\git\C-Sharp-Study\DairyForm\text";
             //var fileName0 = date.ToString("yyyyMMdd") + ".txt";

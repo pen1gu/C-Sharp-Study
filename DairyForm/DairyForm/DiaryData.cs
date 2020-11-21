@@ -8,7 +8,11 @@ namespace DairyForm
 {
     class DiaryData
     {
+        public DateTime Date;
         public string Content;
+        public string Title;
+        
+
     }
 
 
