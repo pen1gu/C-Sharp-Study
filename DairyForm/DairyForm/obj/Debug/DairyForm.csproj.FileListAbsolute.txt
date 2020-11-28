@@ -8,3 +8,6 @@ C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.Generat
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.CoreCompileInputs.cache
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.exe
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.pdb
+C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\Newtonsoft.Json.dll
+C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\Newtonsoft.Json.xml
+C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.CopyComplete

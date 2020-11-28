@@ -11,9 +11,5 @@ namespace DairyForm
         public DateTime Date;
         public string Content;
         public string Title;
-        
-
     }
-
-
 }
