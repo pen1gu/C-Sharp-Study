@@ -2,7 +2,6 @@ C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\DairyForm.exe.config
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\DairyForm.exe
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\DairyForm.pdb
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csprojAssemblyReference.cache
-C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.Form1.resources
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.Properties.Resources.resources
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.GenerateResource.cache
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.CoreCompileInputs.cache
@@ -11,3 +10,4 @@ C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.pdb
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\Newtonsoft.Json.dll
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\bin\Debug\Newtonsoft.Json.xml
 C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.csproj.CopyComplete
+C:\hjun\git\C-Sharp-Study\DairyForm\DairyForm\obj\Debug\DairyForm.Form1.resources
