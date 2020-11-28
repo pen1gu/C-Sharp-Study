@@ -11,5 +11,7 @@ namespace DairyForm
         public DateTime Date;
         public string Content;
         public string Title;
+
+        public List<string> Tags = new List<string>();
     }
 }
