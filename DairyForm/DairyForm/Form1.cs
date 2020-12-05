@@ -17,12 +17,22 @@ namespace DairyForm
         {
             InitializeComponent();
         }
+
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            var date = dateTimePicker1.Value;
+           SaveDiary(
+                title: textBox1.Text,
+                date: dateTimePicker1.Value,
+                content: richTextBox1.Text,
+                encrypted: false);
+        }
+
+
+        private void SaveDiary(string title, DateTime date, string content, bool encrypted)
+        {
             var diary = new DiaryData();
-            diary.Title = textBox1.Text;
-            diary.Content = richTextBox1.Text;
+            diary.Title = title;
+            diary.Content = content;
             diary.Date = date;
 
             diary.Tags = _tagData
@@ -102,6 +112,39 @@ namespace DairyForm
             }
 
             textBox2.Left = index * 100 + 12;
+        }
+
+        private void btnEncryption_Click(object sender, EventArgs e)
+        {
+            var password = txtPassword.Text;
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("암호를 확인하세요.");
+                return;
+            }
+
+            while(password.Trim().Length < 32)
+            {
+                password = password.Trim() + password.Trim();
+            }
+
+            byte[] key = password
+                .Select(x => (byte)x)
+                .Take(32)
+                .ToArray();
+
+            byte[] iv = key
+                .Take(16)
+                .ToArray();//initial vector
+
+            var encrypted = Encryptor.EncryptStringToBytes(richTextBox1.Text, key, iv);
+            var serialized= string.Join(",", encrypted);
+
+            SaveDiary(
+               title: textBox1.Text,
+               date: dateTimePicker1.Value,
+               content: serialized,
+               encrypted: true);
         }
     }
 

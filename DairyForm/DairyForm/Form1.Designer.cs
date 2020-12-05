@@ -33,6 +33,8 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnEncryption = new System.Windows.Forms.Button();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -75,11 +77,30 @@
             this.textBox2.TabIndex = 4;
             this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown_1);
             // 
+            // btnEncryption
+            // 
+            this.btnEncryption.Location = new System.Drawing.Point(12, 387);
+            this.btnEncryption.Name = "btnEncryption";
+            this.btnEncryption.Size = new System.Drawing.Size(102, 23);
+            this.btnEncryption.TabIndex = 5;
+            this.btnEncryption.Text = "암호화 저장";
+            this.btnEncryption.UseVisualStyleBackColor = true;
+            this.btnEncryption.Click += new System.EventHandler(this.btnEncryption_Click);
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(12, 360);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(290, 21);
+            this.txtPassword.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 450);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.btnEncryption);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.richTextBox1);
@@ -99,6 +120,8 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnEncryption;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }
 
