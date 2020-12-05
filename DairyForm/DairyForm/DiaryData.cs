@@ -9,9 +9,9 @@ namespace DairyForm
     class DiaryData
     {
         public DateTime Date;
-        public string Content;
         public string Title;
-
+        public string Content;
         public List<string> Tags = new List<string>();
+        public bool Encrypted;
     }
 }
