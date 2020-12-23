@@ -12,6 +12,7 @@ namespace DairyForm
     public partial class Form1 : Form
     {
         private List<TagControlData> _tagData = new List<TagControlData>();
+        readonly string _rootPath = @"C:\hjun\git\C-Sharp-Study\DairyForm\text";
 
         public Form1()
         {
@@ -21,9 +22,9 @@ namespace DairyForm
         private void btnSubmit_Click(object sender, EventArgs e)
         {
            SaveDiary(
-                title: textBox1.Text,
+                title: txtTitle.Text,
                 date: dateTimePicker1.Value,
-                content: richTextBox1.Text,
+                content: txtContents.Text,
                 encrypted: false);
         }
 
@@ -40,9 +41,9 @@ namespace DairyForm
                 .ToList();
 
             var jsonText = JsonConvert.SerializeObject(diary, Formatting.Indented);
-            var path = @"C:\hjun\git\C-Sharp-Study\DairyForm\text";
+            
             var fileName = $"{date:yyyyMMdd}.json"; //현업에서 쓰이는 문법
-            var diaryPath = Path.Combine(path,fileName);
+            var diaryPath = Path.Combine(_rootPath, fileName);
 
             File.WriteAllText(diaryPath, jsonText);
 
@@ -54,7 +55,10 @@ namespace DairyForm
         {
             if (e.KeyCode == Keys.Enter)
             {
-                var tagText = textBox2.Text;
+                var tagText = txtTag.Text;
+                /*_diaryData.tags.add(tagText);
+                UpdateView(_diaryData);*/
+
                 var newTagLabel = new Label();
                 newTagLabel.Text = tagText;
 
@@ -81,21 +85,11 @@ namespace DairyForm
                     }
                 };
 
-                var tagControlData = new TagControlData
-                {
-                    TagText = tagText,
-                    Control = newTagLabel,
-                    DeleteButton = deleteButton,
-                };
-
-                _tagData.Add(tagControlData);
-
-                this.Controls.Add(deleteButton);
-                this.Controls.Add(newTagLabel);
+                
 
                 RefreshTagList();
 
-                textBox2.Text = "";
+                txtTag.Text = "";
             }
         }
 
@@ -111,7 +105,7 @@ namespace DairyForm
                 index++;
             }
 
-            textBox2.Left = index * 100 + 12;
+            txtTag.Left = index * 100 + 12;
         }
 
         private void btnEncryption_Click(object sender, EventArgs e)
@@ -137,20 +131,75 @@ namespace DairyForm
                 .Take(16)
                 .ToArray();//initial vector
 
-            var encrypted = Encryptor.EncryptStringToBytes(richTextBox1.Text, key, iv);
+            var encrypted = Encryptor.EncryptStringToBytes(txtContents.Text, key, iv);
             var serialized= string.Join(",", encrypted);
 
             SaveDiary(
-               title: textBox1.Text,
+               title: txtTitle.Text,
                date: dateTimePicker1.Value,
                content: serialized,
                encrypted: true);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var files = Directory.GetFiles(_rootPath, "*.json");
+            foreach(var file in files)
+            {
+                listContents.Items.Add(Path.GetFileName(file));
+            }
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            var fileName = listContents.SelectedItem.ToString();
+            LoadDiary(fileName);
+            
+        }
+
+        private void LoadDiary(string fileName)
+        {
+            var filePath = Path.Combine(_rootPath, fileName);
+            var jsonText = File.ReadAllText(filePath);
+            var diaryData = JsonConvert.DeserializeObject<DiaryData>(jsonText);
+
+            UpdateView(diaryData);
+        }
+
+        private void UpdateView(DiaryData diaryData)
+        {
+            dateTimePicker1.Value = diaryData.Date;
+            txtTitle.Text = diaryData.Title;
+            txtContents.Text = diaryData.Content;
+
+            #region Tags
+            #region Remove tag Controls
+            foreach (var tagData in _tagData)
+            {
+                Controls.Remove(tagData.Control);
+                Controls.Remove(tagData.DeleteButton);
+            }
+
+            #endregion
+
+            #region Create tag Controls
+            _tagData = diaryData.Tags.Select((x, i) => new TagControlData
+            {
+                Index = i,
+                TagText = x,
+                Control = new Label { Text = x },
+                DeleteButton = new Button { Text = "X" }
+            }).ToList();
+
+            #endregion
+            #endregion
         }
     }
 
     public class TagControlData
     {
         public string TagText;
+        public int Index;
         public Label Control;
         public Button DeleteButton;
     }

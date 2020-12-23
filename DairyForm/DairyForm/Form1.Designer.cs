@@ -30,11 +30,12 @@
         {
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.btnSubmit = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtContents = new System.Windows.Forms.RichTextBox();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.txtTag = new System.Windows.Forms.TextBox();
             this.btnEncryption = new System.Windows.Forms.Button();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.listContents = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -54,28 +55,28 @@
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
-            // richTextBox1
+            // txtContents
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 73);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(423, 199);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.txtContents.Location = new System.Drawing.Point(12, 73);
+            this.txtContents.Name = "txtContents";
+            this.txtContents.Size = new System.Drawing.Size(423, 199);
+            this.txtContents.TabIndex = 2;
+            this.txtContents.Text = "";
             // 
-            // textBox1
+            // txtTitle
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(248, 21);
-            this.textBox1.TabIndex = 3;
+            this.txtTitle.Location = new System.Drawing.Point(12, 46);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.Size = new System.Drawing.Size(248, 21);
+            this.txtTitle.TabIndex = 3;
             // 
-            // textBox2
+            // txtTag
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 276);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown_1);
+            this.txtTag.Location = new System.Drawing.Point(12, 276);
+            this.txtTag.Name = "txtTag";
+            this.txtTag.Size = new System.Drawing.Size(100, 21);
+            this.txtTag.TabIndex = 4;
+            this.txtTag.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown_1);
             // 
             // btnEncryption
             // 
@@ -94,20 +95,32 @@
             this.txtPassword.Size = new System.Drawing.Size(290, 21);
             this.txtPassword.TabIndex = 7;
             // 
+            // listContents
+            // 
+            this.listContents.FormattingEnabled = true;
+            this.listContents.ItemHeight = 12;
+            this.listContents.Location = new System.Drawing.Point(457, 73);
+            this.listContents.Name = "listContents";
+            this.listContents.Size = new System.Drawing.Size(283, 328);
+            this.listContents.TabIndex = 8;
+            this.listContents.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 450);
+            this.Controls.Add(this.listContents);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.btnEncryption);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.txtTag);
+            this.Controls.Add(this.txtTitle);
+            this.Controls.Add(this.txtContents);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.dateTimePicker1);
             this.Name = "Form1";
             this.Text = "Diary";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -117,11 +130,12 @@
 
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button btnSubmit;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.RichTextBox txtContents;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.TextBox txtTag;
         private System.Windows.Forms.Button btnEncryption;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.ListBox listContents;
     }
 }
 
