@@ -56,7 +56,7 @@ namespace DairyForm
             if (e.KeyCode == Keys.Enter)
             {
                 var tagText = txtTag.Text;
-                /*_diaryData.tags.add(tagText);
+               /* _diaryData.tags.add(tagText);
                 UpdateView(_diaryData);*/
 
                 var newTagLabel = new Label();
@@ -84,8 +84,6 @@ namespace DairyForm
                         MessageBox.Show(ex.Message);
                     }
                 };
-
-                
 
                 RefreshTagList();
 
@@ -189,11 +187,13 @@ namespace DairyForm
                 TagText = x,
                 Control = new Label { Text = x },
                 DeleteButton = new Button { Text = "X" }
-            }).ToList();
+            }).ToList(); //리스트 불러오기
 
             #endregion
             #endregion
         }
+
+        //추가 해야할 부분: 태그 업데이트, 복호화, 전체 재 구성(업데이트 관련 부분)
     }
 
     public class TagControlData
