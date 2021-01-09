@@ -36,6 +36,8 @@
             this.btnEncryption = new System.Windows.Forms.Button();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.listContents = new System.Windows.Forms.ListBox();
+            this.tagPanel = new System.Windows.Forms.Panel();
+            this.tagPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -47,7 +49,7 @@
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Location = new System.Drawing.Point(12, 303);
+            this.btnSubmit.Location = new System.Drawing.Point(12, 319);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
             this.btnSubmit.TabIndex = 1;
@@ -72,7 +74,7 @@
             // 
             // txtTag
             // 
-            this.txtTag.Location = new System.Drawing.Point(12, 276);
+            this.txtTag.Location = new System.Drawing.Point(3, 3);
             this.txtTag.Name = "txtTag";
             this.txtTag.Size = new System.Drawing.Size(100, 21);
             this.txtTag.TabIndex = 4;
@@ -105,15 +107,23 @@
             this.listContents.TabIndex = 8;
             this.listContents.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             // 
+            // tagPanel
+            // 
+            this.tagPanel.Controls.Add(this.txtTag);
+            this.tagPanel.Location = new System.Drawing.Point(12, 278);
+            this.tagPanel.Name = "tagPanel";
+            this.tagPanel.Size = new System.Drawing.Size(423, 35);
+            this.tagPanel.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 450);
+            this.Controls.Add(this.tagPanel);
             this.Controls.Add(this.listContents);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.btnEncryption);
-            this.Controls.Add(this.txtTag);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.txtContents);
             this.Controls.Add(this.btnSubmit);
@@ -121,6 +131,8 @@
             this.Name = "Form1";
             this.Text = "Diary";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tagPanel.ResumeLayout(false);
+            this.tagPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,6 +148,7 @@
         private System.Windows.Forms.Button btnEncryption;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.ListBox listContents;
+        private System.Windows.Forms.Panel tagPanel;
     }
 }
 

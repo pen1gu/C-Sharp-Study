@@ -11,7 +11,9 @@ namespace DairyForm
 
     public partial class Form1 : Form
     {
-        private List<TagControlData> _tagData = new List<TagControlData>();
+        private List<TagControlData> _tagList = new List<TagControlData>();
+        private List<string> _tagTexts = new List<string>();
+
         readonly string _rootPath = @"C:\hjun\git\C-Sharp-Study\DairyForm\text";
 
         public Form1()
@@ -25,18 +27,25 @@ namespace DairyForm
                 title: txtTitle.Text,
                 date: dateTimePicker1.Value,
                 content: txtContents.Text,
-                encrypted: false);
+                encrypted: false,
+                key: null,
+                iv: null);
         }
 
 
-        private void SaveDiary(string title, DateTime date, string content, bool encrypted)
+        private void SaveDiary(string title, DateTime date, string content, bool encrypted, byte[] key, byte[] iv)
         {
             var diary = new DiaryData();
             diary.Title = title;
             diary.Content = content;
             diary.Date = date;
-
-            diary.Tags = _tagData
+            diary.Encrypted = encrypted;
+            if (encrypted != false)
+            {
+                diary.key = key;
+                diary.iv = iv;
+            }
+            diary.Tags = _tagList
                 .Select(x => x.TagText)
                 .ToList();
 
@@ -56,8 +65,6 @@ namespace DairyForm
             if (e.KeyCode == Keys.Enter)
             {
                 var tagText = txtTag.Text;
-               /* _diaryData.tags.add(tagText);
-                UpdateView(_diaryData);*/
 
                 var newTagLabel = new Label();
                 newTagLabel.Text = tagText;
@@ -68,12 +75,12 @@ namespace DairyForm
                 {
                     try
                     {
-                        var removedData = _tagData
+                        var removedData = _tagList
                             .FirstOrDefault(x => x.Control == newTagLabel);
 
                         if (removedData != null)
                         {
-                            _tagData.Remove(removedData);
+                            _tagList.Remove(removedData);
                             Controls.Remove(newTagLabel);
                             Controls.Remove(deleteButton);
                             RefreshTagList();
@@ -85,6 +92,16 @@ namespace DairyForm
                     }
                 };
 
+                TagControlData tagData = new TagControlData();
+                tagData.TagText = tagText;
+                tagData.Control = newTagLabel;
+                tagData.DeleteButton = deleteButton;
+
+                /*tagPanel.Controls.Add(newTagLabel);
+                tagPanel.Controls.Add(deleteButton);
+*/
+                _tagList.Add(tagData);
+
                 RefreshTagList();
 
                 txtTag.Text = "";
@@ -93,17 +110,25 @@ namespace DairyForm
 
         //일기 제목
 
-        private void RefreshTagList()
+        private void RefreshTagList() //태그 리스트 업데이트는 충분히 가능
         {
             int index = 0;
-            foreach(var tagData in _tagData)
+
+            _tagList.Clear();
+            tagPanel.Controls.Clear();
+            foreach (var tagData in _tagList)
             {
-                tagData.Control.SetBounds(index * 100 + 12, 280, 80, 80);
-                tagData.DeleteButton.SetBounds(tagData.Control.Left + 50 + 12, 275, 30, 30);
+                tagData.Control.SetBounds(index * 100 + 12, 5, 60, 80);
+                /*tagData.Control.Text = _tagTexts[index];*/
+                tagData.DeleteButton.SetBounds(tagData.Control.Left + 50 + 12, 0, 30, 30);
+
+                tagPanel.Controls.Add(tagData.Control);
+                tagPanel.Controls.Add(tagData.DeleteButton);
                 index++;
             }
 
             txtTag.Left = index * 100 + 12;
+            tagPanel.Controls.Add(txtTag);
         }
 
         private void btnEncryption_Click(object sender, EventArgs e)
@@ -117,26 +142,28 @@ namespace DairyForm
 
             while(password.Trim().Length < 32)
             {
-                password = password.Trim() + password.Trim();
+                password = password.Trim() + password.Trim(); // 공백을 제거 했을 때를 기준으로 pw 문자열 길이가 32를 안 넘을 시 계속해서 추가
             }
 
-            byte[] key = password
+            byte[] key = password // key 생성 () 
                 .Select(x => (byte)x)
                 .Take(32)
                 .ToArray();
 
-            byte[] iv = key
+            byte[] iv = key // key의 앞 16개
                 .Take(16)
                 .ToArray();//initial vector
 
             var encrypted = Encryptor.EncryptStringToBytes(txtContents.Text, key, iv);
-            var serialized= string.Join(",", encrypted);
+            var serialized= string.Join(",", encrypted); // 암호화한 결과를 , 로 나눔
 
             SaveDiary(
                title: txtTitle.Text,
                date: dateTimePicker1.Value,
                content: serialized,
-               encrypted: true);
+               encrypted: true,
+               key: key,
+               iv: iv); // 직렬화 한 것을 json 파일에 저장
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -164,24 +191,69 @@ namespace DairyForm
             UpdateView(diaryData);
         }
 
+        /*private void InsertData()
+        {
+            _tagList =
+        }*/
+
         private void UpdateView(DiaryData diaryData)
         {
             dateTimePicker1.Value = diaryData.Date;
             txtTitle.Text = diaryData.Title;
-            txtContents.Text = diaryData.Content;
+
+            string decrypted = diaryData.Content;
+            if(diaryData.Encrypted == true)
+            {
+                var bytes = decrypted.Split(',')
+                    .Select(x =>
+                    (byte)int.Parse(x))
+                    .ToArray();
+
+                decrypted = Encryptor.DecryptStringFromBytes(bytes,diaryData.key,diaryData.iv);
+            }
+
+            txtContents.Text = decrypted;
+
+
+            _tagTexts = diaryData.Tags;
+
+            int index = 0;
+            foreach (string tagText in _tagTexts)
+            {
+                Label label = new Label();
+                label.Text = tagText;
+                Button button = new Button();
+                button.Text = "X"; // x버튼 누를 시 삭제 추가
+
+                TagControlData ControlData = new TagControlData();
+                ControlData.Control = label;
+                ControlData.DeleteButton = button;
+                ControlData.Index = index;
+                ControlData.TagText = tagText;
+
+                _tagList.Add(ControlData);
+                index++;
+            }
+
+
 
             #region Tags
             #region Remove tag Controls
-            foreach (var tagData in _tagData)
-            {
-                Controls.Remove(tagData.Control);
-                Controls.Remove(tagData.DeleteButton);
-            }
 
+            RefreshTagList();
+
+
+            /*  foreach (var tagData in _tagData)
+              {
+                  Controls.Remove(tagData.Control);
+                  Controls.Remove(tagData.DeleteButton);
+              }
+  */
             #endregion
 
-            #region Create tag Controls
-            _tagData = diaryData.Tags.Select((x, i) => new TagControlData
+            
+            /*#region Create tag Controls
+            _tagList = diaryData.Tags.Select((x, i) => new TagControlData
             {
                 Index = i,
                 TagText = x,
@@ -189,12 +261,13 @@ namespace DairyForm
                 DeleteButton = new Button { Text = "X" }
             }).ToList(); //리스트 불러오기
 
-            #endregion
+            #endregion*/
             #endregion
         }
 
         //추가 해야할 부분: 태그 업데이트, 복호화, 전체 재 구성(업데이트 관련 부분)
     }
+
 
     public class TagControlData
     {
