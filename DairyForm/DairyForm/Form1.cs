@@ -114,8 +114,8 @@ namespace DairyForm
         {
             int index = 0;
 
-            _tagList.Clear();
             tagPanel.Controls.Clear();
+
             foreach (var tagData in _tagList)
             {
                 tagData.Control.SetBounds(index * 100 + 12, 5, 60, 80);
@@ -129,6 +129,8 @@ namespace DairyForm
 
             txtTag.Left = index * 100 + 12;
             tagPanel.Controls.Add(txtTag);
+
+            /*_tagList.Clear();*/
         }
 
         private void btnEncryption_Click(object sender, EventArgs e)
@@ -178,12 +180,23 @@ namespace DairyForm
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             var fileName = listContents.SelectedItem.ToString();
+            if (checkKey() == false)
+            {
+                return;
+            }
             LoadDiary(fileName);
             
         }
 
+        public Boolean checkKey()
+        {
+            /*string input = Microsoft.VisualBasic.Interaction.InputBox();*/
+            return true;
+        }
+
         private void LoadDiary(string fileName)
         {
+            _tagList.Clear();
             var filePath = Path.Combine(_rootPath, fileName);
             var jsonText = File.ReadAllText(filePath);
             var diaryData = JsonConvert.DeserializeObject<DiaryData>(jsonText);
