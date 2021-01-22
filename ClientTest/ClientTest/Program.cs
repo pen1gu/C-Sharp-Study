@@ -3,53 +3,69 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace ClientTest
 {
     class Program
     {
+        static Socket sock;
         static void Main(string[] args)
         {
-            // (1) 소켓 객체 생성 (TCP 소켓)
-            Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sock = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Stream,
+                    ProtocolType.Tcp
+                    );//소켓 생성
+            //인터페이스 결합(옵션)
+            //연결
+            IPAddress addr = IPAddress.Parse("192.168.56.1");
+            IPEndPoint iep = new IPEndPoint(addr, 3000);
+            sock.Connect(iep);
+            string str;
+            byte[] packet = new byte[1024];
+            
+            string sendString = string.Empty;
+            byte[] bytes = new byte[1024];
 
-            // (2) 서버에 연결
-            var ep = new IPEndPoint(IPAddress.Parse("192.168.219.120"), 7000);
-            try
+            Thread thread = new Thread(()=>receiveMsg());
+            thread.Start();
+
+            while (true)
             {
-                sock.Connect(ep);
+                str = Console.ReadLine();
+                MemoryStream ms = new MemoryStream(packet);
+                BinaryWriter bw = new BinaryWriter(ms);
+                bw.Write(str);
+
+                bw.Close();
+                ms.Close();
+                sock.Send(packet);
+
+                if (str == "exit")
+                {
+                    break;
+                }
+
+
             }
-            catch (Exception ex){
-                Console.WriteLine(ex.Message);
-            }
-
-            string cmd = string.Empty;
-            byte[] receiverBuff = new byte[8192];
-
-            Console.WriteLine("Connected... Enter Q to exit");
-
-            // Q 를 누를 때까지 계속 Echo 실행
-            while ((cmd = Console.ReadLine()) != "Q")
+            sock.Close();//소켓 닫기
+        }
+        public static void receiveMsg()
+        {
+            while (true)
             {
-                try {
-                    byte[] buff = Encoding.UTF8.GetBytes(cmd);
+                byte[] packet2 = new byte[1024];
+                string str2 = null;
 
-                    // (3) 서버에 데이타 전송
-                    sock.Send(buff, SocketFlags.None);
+                sock.Receive(packet2);
 
-                    // (4) 서버에서 데이타 수신
-                    int n = sock.Receive(receiverBuff);
-
-                    string data = Encoding.UTF8.GetString(receiverBuff, 0, n);
-                    Console.WriteLine(data);
-                }
-                catch (Exception ex){
-                    Console.WriteLine(ex.Message);
-                }
+                MemoryStream ms2 = new MemoryStream(packet2);
+                BinaryReader br = new BinaryReader(ms2);
+                str2 = br.ReadString();
+                Console.WriteLine("수신한 메시지:{0}", str2);
+                br.Close();
+                ms2.Close();
             }
-
-            // (5) 소켓 닫기
-            sock.Close();
         }
     }
 }
