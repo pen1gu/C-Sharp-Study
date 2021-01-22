@@ -1,51 +1,85 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace ServerTest
 {
     class Program
     {
+        static List<Socket> connections = null;
+        byte[] msgPacket = new byte[1024];
         static void Main(string[] args)
         {
-            // (1) 소켓 객체 생성 (TCP 소켓)
-            Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Socket sock = null;
+            sock = new Socket(
+                AddressFamily.InterNetwork,
+                SocketType.Stream,
+                ProtocolType.Tcp
+                );//소켓 생성 
 
-            // (2) 포트에 바인드
-            IPEndPoint ep = new IPEndPoint(IPAddress.Any, 7000);
-            sock.Bind(ep);
+            connections = new List<Socket>();
+            //인터페이스와 결합
+            IPAddress addr = IPAddress.Any;
+            IPEndPoint iep = new IPEndPoint(addr, 52217);
+            sock.Bind(iep);
 
-            // (3) 포트 Listening 시작
-            
+            //백로그 큐 크기 설정
             sock.Listen(10);
-            Socket clientSock = sock.Accept();
-            while (true)
+            Socket dosock;
+
+            Console.WriteLine("연결을 기다리는 중입니다.");
+
+            while (true)//AcceptLoop
             {
-                Console.WriteLine("연결을 기다리는 중..");
-                // (4) 연결을 받아들여 새 소켓 생성 (하나의 연결만 받아들임)
+                dosock = sock.Accept();
+                Console.WriteLine("연결되었습니다.");
+                Thread t = new Thread(new ParameterizedThreadStart(DoIt));
+                t.Start(dosock);
+                connections.Add(dosock);
             }
-
-            Console.WriteLine("연결되었습니다.");
-
-            byte[] buff = new byte[8192];
-
-            while (!Console.KeyAvailable) // 키 누르면 종료
+        }
+         
+        public static void DoIt(Object socket)
+        {
+            Socket dosock = (Socket)socket;
+            try
             {
-                // (5) 소켓 수신
-                int n = clientSock.Receive(buff);
+                byte[] packet = new byte[1024];
+                IPEndPoint iep = dosock.RemoteEndPoint as IPEndPoint;
+                while (true)
+                {
+                    dosock.Receive(packet);
+                    MemoryStream ms = new MemoryStream(packet);
+                    BinaryReader br = new BinaryReader(ms);
+                    string msg = br.ReadString();
+                    br.Close();
+                    ms.Close();
 
-                string data = Encoding.UTF8.GetString(buff, 0, n);
-                Console.WriteLine(data);
+                    if (msg == "exit")
+                    {
+                        Console.WriteLine("{0}:{1} 님이 나가셨습니다.", iep.Address, iep.Port);
+                        break;
+                    }
 
-                // (6) 소켓 송신
-                clientSock.Send(buff, 0, n, SocketFlags.None);  // echo
+                    Console.WriteLine("{0}:{1} → {2}", iep.Address, iep.Port, msg);
+                    for(int i = 0; i < connections.Count; i++)
+                    {
+                        connections[i].Send(packet);
+                    }
+                }
             }
-
-            // (7) 소켓 닫기
-            clientSock.Close();
-            sock.Close();
+            catch
+            {
+            }
+            finally
+            {
+                dosock.Close();
+            }
         }
     }
 }
