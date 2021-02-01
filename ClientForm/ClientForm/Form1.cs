@@ -14,8 +14,6 @@ namespace ClientForm
 {
     public partial class Form1 : Form
     {
-
-        Socket socket;
         public Form1()
         {
             InitializeComponent();
@@ -24,13 +22,30 @@ namespace ClientForm
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            /*tcpListener = new TcpListener(3000);*/
+            /*tcpListener.Start();*/
+
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            
+
+            TcpClient client = new TcpClient(clientAddress);
+            try {
+                client.Connect(serverAddress);
+            }catch(Exception ex)
+            {
+                richTextBox1.AppendText(ex.Message);
+                MessageBox.Show("Can't Connect");
+                return;
+            }
+
+            MessageBox.Show("Connected!");
         }
 
         private void BtnConnect_Click(object sender, EventArgs e)
         {
             
-            try
+            
+           /* try
             {
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint ep = new IPEndPoint(IPAddress.Parse("192.168.56.1"), 7000);
@@ -43,7 +58,7 @@ namespace ClientForm
                 return;
             }
 
-            MessageBox.Show("연결되었습니다.");
+            MessageBox.Show("연결되었습니다.");*/
 
             /*byte[] receiverBuff = new byte[8192];
 
