@@ -67,9 +67,10 @@ namespace ServerTest
                     }
 
                     Console.WriteLine("{0}:{1} → {2}", iep.Address, iep.Port, msg);
-                    for(int i = 0; i < connections.Count; i++)
+
+                    foreach(Socket connection in connections)
                     {
-                        connections[i].Send(packet);
+                        connection.Send(packet);
                     }
                 }
             }
