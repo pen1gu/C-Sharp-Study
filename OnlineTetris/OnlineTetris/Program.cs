@@ -16,7 +16,7 @@ namespace OnlineTetris
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ServerForm());
+            Application.Run(new TetrisForm());
 
         }
     }

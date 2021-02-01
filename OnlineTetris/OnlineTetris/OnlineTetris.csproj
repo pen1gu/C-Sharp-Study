@@ -46,16 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServerForm.cs">
+    <Compile Include="TetrisForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServerForm.Designer.cs">
-      <DependentUpon>ServerForm.cs</DependentUpon>
+    <Compile Include="TetrisForm.Designer.cs">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ServerForm.resx">
-      <DependentUpon>ServerForm.cs</DependentUpon>
+    <EmbeddedResource Include="TetrisForm.resx">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
