@@ -9,62 +9,56 @@ namespace ClientTest
 {
     class Program
     {
-        static Socket sock;
+        static bool checkEnd = true;
+        static Socket socket;
         static void Main(string[] args)
         {
-            sock = new Socket(AddressFamily.InterNetwork,
+            socket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream,
                     ProtocolType.Tcp
                     );//소켓 생성
             //인터페이스 결합(옵션)
             //연결
-            IPAddress addr = IPAddress.Parse("192.168.56.1");
-            IPEndPoint iep = new IPEndPoint(addr, 3000);
-            sock.Connect(iep);
+            IPAddress addr = IPAddress.Parse("221.143.21.37");
+            IPEndPoint iep = new IPEndPoint(addr, 52217);
+            socket.Connect(iep);
             string str;
             byte[] packet = new byte[1024];
-            
+
             string sendString = string.Empty;
             byte[] bytes = new byte[1024];
 
-            Thread thread = new Thread(()=>receiveMsg());
+            Thread thread = new Thread(() => receiveMsg());
             thread.Start();
 
             while (true)
             {
                 str = Console.ReadLine();
-                MemoryStream ms = new MemoryStream(packet);
-                BinaryWriter bw = new BinaryWriter(ms);
-                bw.Write(str);
+                var sendBytes = Encoding.UTF8.GetBytes(str);
 
-                bw.Close();
-                ms.Close();
-                sock.Send(packet);
+                socket.Send(sendBytes);
 
                 if (str == "exit")
                 {
+                    /*checkEnd = false;*/
                     break;
                 }
-
-
             }
-            sock.Close();//소켓 닫기
+            socket.Close();//소켓 닫기
         }
         public static void receiveMsg()
         {
             while (true)
             {
-                byte[] packet2 = new byte[1024];
-                string str2 = null;
+                byte[] packet = new byte[1024];
 
-                sock.Receive(packet2);
+                /*if (checkEnd == false) return;*/
 
-                MemoryStream ms2 = new MemoryStream(packet2);
-                BinaryReader br = new BinaryReader(ms2);
-                str2 = br.ReadString();
-                Console.WriteLine("수신한 메시지:{0}", str2);
-                br.Close();
-                ms2.Close();
+                var recieveCount = socket.Receive(packet);
+
+                var str = Encoding.UTF8.GetString(packet, 0, recieveCount);
+
+                Console.WriteLine("수신한 메시지:{0}", str);
             }
         }
     }
